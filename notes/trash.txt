@@ -38,5 +38,39 @@ class Characters {
   }
 }
 
+class Items {
+  constructor (description, initialState, newState) {
+    this.description: description
+    this.initialState = initialState
+    this.newState = newState
+  }
+}
+
 #Rooms
-1. Lavander field
+1. Starting Room
+2. Lavander
+3. (Natural stones) pathway
+
+#Items
+1. initialDoor 
+
+
+#Characters
+1. Mashy (A talking red mashroom)
+
+-------------------------------------------------------JAVASCRIPT TOOLS NEEDED---------
+State Machine ---> currentRoom, other Rooms
+class, objects
+functions
+methods
+
+-----------------------------------------------------------------------------------------
+
+function that checks if an answer contains the words that we need to move on:
+
+function checkTheAnswer (answer) {
+  let wordsNeeded = ['ex', 'ex2'];
+
+  let result = answer.includes(wordsNeeded);
+
+}
