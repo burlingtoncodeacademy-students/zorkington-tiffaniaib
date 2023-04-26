@@ -69,7 +69,7 @@ else {
 };
   
 console.log(`
-You went closer but it looks like the sign has changed. Instead of the previous text there is a much longer one.
+You went closer but it looks like the sign has changed. Now the text says:\n
 "If 2 equals 3,
 3 equals 5,
 and 25 equals 11.

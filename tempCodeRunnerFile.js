@@ -69,7 +69,7 @@ else {
 };
   
 console.log(`
-You went closer but it looks like the sign has changed. Instead of the previous text there is a much longer one.
+You went closer but it looks like the sign has changed. Now the text says:\n
 "If 2 equals 3,
 3 equals 5,
 and 25 equals 11.
@@ -98,7 +98,7 @@ What do you think is the number?\n`
     }
 
     // after the 3rd try the game ends
-    console.log(`It's sad to see you leaving so soon.\nGAME OVER!`)
+    console.log(`AAH wrog number!\nIt's sad to see you leaving so soon.\nGAME OVER!`)
     process.exit();
   }
   
@@ -110,3 +110,5 @@ What do you think is the number?\n`
 
 };
 
+
+ 
