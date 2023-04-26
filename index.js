@@ -74,7 +74,6 @@ You went closer but it looks like the sign has changed. Instead of the previous 
 3 equals 5,
 and 25 equals 11.
 What does 17 equal to?
-
 If the right answer you will provide, you will start a jurney. But without a guide. 
 You have only 3 guesses. Good luck!`);
 
@@ -91,13 +90,15 @@ What do you think is the number?\n`
     // First create a variable to store the total of tries that the player does because we gave a max of 3
     let totalGuesses = 1;
     
-    while (totalGuesses <= 3) {
+    while (totalGuesses < 3) {
     
     totalGuesses++
-    console.log(`${answer} is the wrong answer. Try again`)
+    console.log(`${answer} is the wrong answer.`)
+    answer = await ask ("Try again\n")
     }
 
     // after the 3rd try the game ends
+    console.log(`AAH wrog number!\nIt's sad to see you leaving so soon.\nGAME OVER!`)
     process.exit();
   }
   
