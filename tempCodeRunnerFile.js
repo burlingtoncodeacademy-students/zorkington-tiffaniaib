@@ -89,7 +89,7 @@ What do you think is the number?\n`
   if (answer != 9) {
 
     // First create a variable to store the total of tries that the player does because we gave a max of 3
-    let totalGuesses = 1;
+    let totalGuesses = 0;
     
     while (totalGuesses <= 3) {
     
@@ -108,10 +108,6 @@ What do you think is the number?\n`
   process.exit();
 
 };
-
-
- 
-
 
 
  

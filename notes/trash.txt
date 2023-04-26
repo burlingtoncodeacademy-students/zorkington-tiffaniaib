@@ -38,13 +38,6 @@ class Characters {
   }
 }
 
-class Items {
-  constructor (description, initialState, newState) {
-    this.description: description
-    this.initialState = initialState
-    this.newState = newState
-  }
-}
 
 #Rooms
 1. Starting Room
@@ -74,3 +67,26 @@ function checkTheAnswer (answer) {
   let result = answer.includes(wordsNeeded);
 
 }
+
+$$$$$$$$$ CODE THAT I WILL NEED DURING THE GAME $$$$$$$$$$
+
+let currentPlayerLocation = 'street';
+
+
+let answer = wait ask
+let differentAnswer = await ask
+
+
+let validInputs = [];
+
+
+\n
+
+else {
+    console.log(`I'm sorry, I don't understand ${answer}.`);
+    differentAnswer = await ask ("Try again");
+    
+    while (checkTheAnswer(differentAnswer) === false) {
+      differentAnswer = await ask (`Try again\n`);
+    }
+};
