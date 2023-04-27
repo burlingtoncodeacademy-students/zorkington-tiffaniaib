@@ -59,6 +59,17 @@ How do I check for two words on a string using include()?
 if(str.includes("a") && str.includes("b")) {
 console.log(a and b received)
 }
+
+When the command insert is invalid
+
+else {
+    console.log(`...`);
+    answer = await ask ("Try again!\n");
+    
+    while (answer !== 'look closer') {
+    answer = await ask (`${answer} doesn't ring any bell. Try again!\n`);
+    }
+}; 
 -------------------------------------------------------JAVASCRIPT TOOLS NEEDED---------
 State Machine ---> currentRoom, other Rooms
 class, objects
@@ -68,8 +79,7 @@ methods
 -----------------------------------------------------------------------------------------
 
 class Room {
-    constructor(name, description (immutable), connection (imm), inventory (mutable)) {
-        this.name = name
+    constructor(description (immutable), connection (imm), inventory (mutable)) {
         this.description = description
         this.connection = connection
         this.inventory = inventory
@@ -77,8 +87,7 @@ class Room {
 }
 
 class Characters {
-  constructor (name, inventory, status) {
-    this.name = name
+  constructor (inventory, status) {
     this.inventory = inventory
     this.status = status
   }

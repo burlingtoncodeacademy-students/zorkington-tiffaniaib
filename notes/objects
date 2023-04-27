@@ -1,7 +1,28 @@
+#State Machine
+const locationsYouCanGo = {
+    'street' : ['field'],
+    'field': ['pathway', 'brick house'],
+    'pathway': ['forest']
+   };
+
 
  #Rooms
  1. Starting Room (STREET)
- 2. Lavander
+
+
+ 2. field
+
+ const field = new Room(
+    `You have entered the foyer and the door shuts behind you;
+    What you see look unbeliavebly beautiful:
+    it's a huge field with bright green grass, that almost looks like it has no end.
+    Ahead of you there is a long pathway that leads to a giagantic tree.
+    On your right, 10 feet from where you are,
+    there is a house from which you can hear baby screaming sound.`, //description
+    ['pathway', 'brick house'], //connection
+    ['red lollipop', 'yellow lollipop'] //inventory
+    );
+
  3. (Natural stones) pathway
  
 
@@ -13,11 +34,15 @@
     closed: "This door is closed. I bet you know the password, otherwise you wouldn't be here, right?",
     open: "I knew you were the one! The door is now open"
    }
+
+2. BACKPACK 
  
- 
+ const backpack = {
+  inventory: ['wallet', 'bottle of water', 'parchment']
+};
 
 
-   
+
  #Characters
  1. Mashy (A talking red mashroom)
  

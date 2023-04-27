@@ -38,21 +38,6 @@ const street = new Room(
   []
 );
 
-const backpack = {
-  inventory: ['wallet', 'bottle of water', 'parchment']
-};
-
-const field = new Room(
-`You have entered the foyer and the door shuts behind you;
-What you see look unbeliavebly beautiful:
-it's a huge field with bright green grass, that almost looks like it has no end.
-Ahead of you there is a long pathway that leads to a giagantic tree.
-On your right, 10 feet from where you are,
-there is a house from which you can hear baby screaming sound.`, //description
-['pathway', 'brick house'], //connection
-['red lollipop', 'yellow lollipop'] //inventory
-);
-
 // ------------------------------------------------------------------------------------------------------------------------
 
 //We need a State Machine to represent the different rooms and how they are connected
@@ -148,17 +133,9 @@ This time it is says: "Check your bag for a little message".
 
   if ((answer.includes('check')) && (answer.includes('bag'))) {
      console.log(`
-You move your hand around and touch your wallet, then your bottle of water, then something unrecognizable.
-You pull it out: it's a parchment!
-
-The content is the following:
-'You know where you're coming from, but not where you are going.
-The helves put some extra help in your bag
-without you knowing. 
-The objects are going to change, basing on your needs.
-You might find a potion, or some magic seeds.
-`);
-} 
+     You move your hand around and touch your wallet, then your bottle of water, then something unrecognizable.
+     You pull it out: it's a parchment!`)
+  } 
   else {
       console.log(`I don't understand ${answer}`);
       answer = await ask ('Try again\n');
@@ -168,24 +145,7 @@ You might find a potion, or some magic seeds.
       }
   }; 
    
-const moveToOpenDoor = `
-If you were confused before, now you are feeling completely lost.
-But one thing is sure: you want to unveil the mystery.
- `
 
- answer = await ask(moveToOpenDoor);
-
- if (answer.includes('open door')) {
-  console.log()
- }
- else {
-  console.log(`I don't understand ${answer}`);
-  answer = await ask ('Try again\n');
-  
-   while (answer.includes !== 'open door') {
-   answer = await ask (`I don't understand ${answer}. Try again!\n`);
-   }
-}; 
   process.exit();
 
 };
