@@ -21,53 +21,6 @@ On the door is a handwritten sign.`;
 }
 --------------------END OF STARTING CODE--------------------
 
-class Room {
-    constructor(name, description (immutable), connection (imm), inventory (mutable)) {
-        this.name = name
-        this.description = description
-        this.connection = connection
-        this.inventory = inventory
-    }
-}
-
-class Characters {
-  constructor (name, inventory, status) {
-    this.name = name
-    this.inventory = inventory
-    this.status = status
-  }
-}
-
-
-#Rooms
-1. Starting Room
-2. Lavander
-3. (Natural stones) pathway
-
-#Items
-1. initialDoor 
-
-
-#Characters
-1. Mashy (A talking red mashroom)
-
--------------------------------------------------------JAVASCRIPT TOOLS NEEDED---------
-State Machine ---> currentRoom, other Rooms
-class, objects
-functions
-methods
-
------------------------------------------------------------------------------------------
-
-function that checks if an answer contains the words that we need to move on:
-
-function checkTheAnswer (answer) {
-  let wordsNeeded = ['ex', 'ex2'];
-
-  let result = answer.includes(wordsNeeded);
-
-}
-
 $$$$$$$$$ CODE THAT I WILL NEED DURING THE GAME $$$$$$$$$$
 
 let currentPlayerLocation = 'street';
@@ -90,3 +43,39 @@ else {
       differentAnswer = await ask (`Try again\n`);
     }
 };
+
+
+function that checks if an answer contains the words that we need to move on:
+
+function checkTheAnswer (answer) {
+  let wordsNeeded = ['ex', 'ex2'];
+
+  let result = answer.includes(wordsNeeded);
+
+}
+-------------------------------------------------------JAVASCRIPT TOOLS NEEDED---------
+State Machine ---> currentRoom, other Rooms
+class, objects
+functions
+methods
+
+-----------------------------------------------------------------------------------------
+
+class Room {
+    constructor(name, description (immutable), connection (imm), inventory (mutable)) {
+        this.name = name
+        this.description = description
+        this.connection = connection
+        this.inventory = inventory
+    }
+}
+
+class Characters {
+  constructor (name, inventory, status) {
+    this.name = name
+    this.inventory = inventory
+    this.status = status
+  }
+}
+
+

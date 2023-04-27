@@ -1,0 +1,23 @@
+
+ #Rooms
+ 1. Starting Room (STREET)
+ 2. Lavander
+ 3. (Natural stones) pathway
+ 
+
+
+ #Items
+ 1. INITIAL DOOR
+
+ const doorAtBeginning = {
+    closed: "This door is closed. I bet you know the password, otherwise you wouldn't be here, right?",
+    open: "I knew you were the one! The door is now open"
+   }
+ 
+ 
+
+
+   
+ #Characters
+ 1. Mashy (A talking red mashroom)
+ 

@@ -101,9 +101,6 @@ What do you think is the number?\n`
     console.log(`AAH wrog number!\nIt's sad to see you leaving so soon.\nGAME OVER!`)
     process.exit();
   }
-  
-
-
   else {console.log(doorAtBeginning.open);} 
 
   process.exit();
