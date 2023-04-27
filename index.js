@@ -34,10 +34,10 @@ async function start() {
   let validInputs = ['look closer'];
 
   // ----------THIS FUNCTION WILL BE VERY HELPFUL 
-  function checkTheAnswer (answer) { 
-      return answer.includes(validInputs);
-      let answerCheck =  answer.includes(validInputs);
-    }
+  // function checkTheAnswer (answer) { 
+      // return answer.includes(validInputs);
+      // let answerCheck =  answer.includes(validInputs);
+    // }
 
   //   -----------------------------------------
 
@@ -47,24 +47,28 @@ async function start() {
 You are standing on Main Street between Church and South Winooski.
 There is a door here. A keypad sits on the handle.
 On the door is a handwritten sign that says: LOOK CLOSER\n`;
-// The player's answer will be stored in the variable answer
-  let answer = await ask(welcomeMessage);
+
+  let answer = await ask(welcomeMessage);  //The player's answer will be stored in the variable answer
 
 
 // We check the answer 
-// if it's true..
 
-if (checkTheAnswer(answer)) {
+//If the player inserts these words tryng to force the door open
+ if ((answer.includes('open')) && (answer.includes('door'))) {
+    console.log(doorAtBeginning.closed);
+};
 
-  console.log(`Mmm...weird`);
+// Otherwise, if the p inserts the right commands
+if (answer.includes('look closer')) {
+    console.log(`Mmm...weird`);
 }
 
 else {
-    console.log(`I'm sorry, I don't understand ${answer}.`);
-    differentAnswer = await ask ("Try again\n");
+    console.log(`...`);
+    answer = await ask ("Try again!\n");
     
-    while (checkTheAnswer(differentAnswer) === false) {
-      differentAnswer = await ask (`Try again\n`);
+    while (answer !== 'look closer') {
+    answer = await ask (`${answer} doesn't ring any bell. Try again!\n`);
     }
 };
   
@@ -78,30 +82,32 @@ If the right answer you will provide, you will start a jurney. But without a gui
 You have only 3 guesses. Good luck!`);
 
 
+// First create a variable to store the total of tries that the player does because we gave a max of 3
+let totalGuesses = 2;
 
 
 const guessPass = `
 What do you think is the number?\n`
   answer = await ask(guessPass);
 
-  
-  if (answer != 9) {
-
-    // First create a variable to store the total of tries that the player does because we gave a max of 3
-    let totalGuesses = 1;
+    if (answer == 9) {
+       console.log(doorAtBeginning.open);
+    } 
     
-    while (totalGuesses < 3) {
+ 
+    else {
+      while (totalGuesses <= 3) {
+        totalGuesses++
+        console.log(`${answer} is the wrong answer.`)
+        answer = await ask ("Try again\n")
+        };
     
-    totalGuesses++
-    console.log(`${answer} is the wrong answer.`)
-    answer = await ask ("Try again\n")
-    }
+    
 
-    // after the 3rd try the game ends
     console.log(`AAH wrog number!\nIt's sad to see you leaving so soon.\nGAME OVER!`)
-    process.exit();
+    process.exit(); 
   }
-  else {console.log(doorAtBeginning.open);} 
+   
 
   process.exit();
 

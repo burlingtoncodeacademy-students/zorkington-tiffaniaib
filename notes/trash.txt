@@ -53,6 +53,12 @@ function checkTheAnswer (answer) {
   let result = answer.includes(wordsNeeded);
 
 }
+
+How do I check for two words on a string using include()?
+
+if(str.includes("a") && str.includes("b")) {
+console.log(a and b received)
+}
 -------------------------------------------------------JAVASCRIPT TOOLS NEEDED---------
 State Machine ---> currentRoom, other Rooms
 class, objects
