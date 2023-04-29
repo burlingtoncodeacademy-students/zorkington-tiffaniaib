@@ -7,10 +7,10 @@ const locationsYouCanGo = {
 
 
  #Rooms
- 1. Starting Room (STREET)
+ 1. STARTING ROOM (STREET)
 
 
- 2. field
+ 2. FIELD
 
  const field = new Room(
     `You have entered the foyer and the door shuts behind you;
@@ -23,7 +23,7 @@ const locationsYouCanGo = {
     ['red lollipop', 'yellow lollipop'] //inventory
     );
 
- 3. (Natural stones) pathway
+ 3. (Natural stones) PATHWAY
  
 
 
@@ -38,11 +38,31 @@ const locationsYouCanGo = {
 2. BACKPACK 
  
  const backpack = {
-  inventory: ['wallet', 'bottle of water', 'parchment']
+  inventory: ['wallet', 'bottle of water', 'parchment'],
+  message: function whatsInMyBackpack (inventory) {
+    // first we need to turn the inventory (arr) into a string using the method toString()
+    let stringInventory = backpack.inventory.toString(', ');
+
+    // then we print a message that provides the p with the info on the inventory
+    console.log(`It looks like you are covered! In your packpack you have:
+    ${stringInventory}.`)
+  } 
 };
+
+3. PARCHMENT 
+
+const parchment = {
+    read : 
+    `The content is the following:
+    'You know where you're coming from, but not where you are going.
+    The helves put some extra help in your bag
+    without you knowing. 
+    The objects are going to change, basing on your needs.
+    You might find a potion, or some magic seeds.`
+  }
 
 
 
  #Characters
- 1. Mashy (A talking red mashroom)
+ 1. MASHY (A talking red mashroom)
  

@@ -1,3 +1,4 @@
+const { Sign } = require('crypto');
 const readline = require('readline');
 const readlineInterface = readline.createInterface(process.stdin, process.stdout);
 
@@ -7,7 +8,62 @@ function ask(questionText) {
   });
 }
 
-start();
+
+
+
+// ==================================================================       ITEMS        ===================================================================================================
+
+const sign = { 
+  read: async function solveRiddle () {
+  console.log(`You went closer but it looks like the sign has changed. Now the text says:
+  If 3 equals 5,
+  and 25 equals 11.
+  What does 17 equal to?
+  If you provide the right answer, you will start a journey. But without a guide.
+  You have only 3 guesses. Good luck!`)
+
+  const question = 'What do you think is the number?\n';
+  let answer = await ask(question);
+  // First create a variable to store the total of tries that the player does because we gave a max of 3
+  let totalGuesses = 2; //We set this to 2 so the counting will work and it will only allow 3 tries
+
+    while (totalGuesses <= 3) {
+      if (answer == 9) {
+      console.log('I knew you were the one! The door is now open');
+      break;
+      } else {
+      console.log(`${answer} is the wrong answer.`);
+      totalGuesses++;
+      answer = await ask("Try again\n");
+      }
+    }
+
+    if (totalGuesses > 3) {
+      console.log(`AAH wrog number!\nIt's sad to see you leaving so soon.\nGAME OVER!`);
+      process.exit();
+    }
+  }
+};
+
+const backpack = {
+  inventory: ['wallet', 'bottle of water', 'parchment'],
+  message: function whatsInMyBackpack (inventory) {
+    // first we need to turn the inventory (arr) into a string using the method toString()
+    let stringInventory = backpack.inventory.toString(', ');
+
+    // then we print a message that provides the p with the info on the inventory
+    console.log(`It looks like you are covered! In your packpack you have:
+    ${stringInventory}.`)}
+};
+
+const parchment = {
+  read: `The content is the following:
+  'You know where you're coming from, but not where you are going.
+  The helves put some extra help in your bag
+  without you knowing. 
+  The objects are going to change, basing on your needs.
+  You might find a potion, or some magic seeds.`
+};
 
 // CLASSES
 
@@ -26,167 +82,168 @@ class Characters {
   }
 }
 
-// ------------------------REST OF THE ELEMENTS  BELOW------------
-const doorAtBeginning = {
-  closed: `This door is closed. I bet you know the password, otherwise you wouldn't be here, right?`,
-  open: 'I knew you were the one! The door is now open'
- }
+// ==================================================================        ROOMS         ======================================================================================
+const field = new Room(
+  `You have entered the foyer and the door shuts behind you;
+  What you see look unbeliavebly beautiful:
+  it's a huge field with bright green grass, that almost looks like it has no end.
+  Ahead of you there is a long pathway that leads to a giagantic tree.
+  On your right, 10 feet from where you are,
+  there is a house from which you can hear baby screaming sound.`, //description
+  ['pathway', 'brick house'], //connection
+  ['red lollipop', 'yellow lollipop'] //inventory
+  );
 
 const street = new Room(
   [],
-  ['field'],
-  []
+  [field],
+  [sign]
 );
 
-const backpack = {
-  inventory: ['wallet', 'bottle of water', 'parchment']
-};
 
-const field = new Room(
-`You have entered the foyer and the door shuts behind you;
-What you see look unbeliavebly beautiful:
-it's a huge field with bright green grass, that almost looks like it has no end.
-Ahead of you there is a long pathway that leads to a giagantic tree.
-On your right, 10 feet from where you are,
-there is a house from which you can hear baby screaming sound.`, //description
-['pathway', 'brick house'], //connection
-['red lollipop', 'yellow lollipop'] //inventory
-);
+// ==============================================================        CHARACTERS         =======================================================================================
+const player = new Characters (
+  ['wallet', 'bottle of water', 'parchment'],
+  ['street', 'field', 'pathway', 'brick house', 'forest']
+  );
 
-// ------------------------------------------------------------------------------------------------------------------------
-
+//================================================================        STATE MACHINE      ===================================================================================
 //We need a State Machine to represent the different rooms and how they are connected
 // the keys (left) are the different locations, the values (right) represent the possible transictions for each room
-
-// STATE MACHINE
 const locationsYouCanGo = {
  'street' : ['field'],
  'field': ['pathway', 'brick house'],
- 'pathway': ['forest']
+ 'brick house': ['field'],
+ 'pathway': ['forest'],
+ 'forest': ['street']
 };
 
 
-async function start() {
+// const firstDoorStates = {
+//   open: 'closed',
+//   closed: 'open'
+// };
+// let doorOpen = false;
+// ==========================================================        LOOKUP TABLES      ==================================================================================================
 
-  let currentPlayerLocation = 'street';
-
-
-// Instead of a question the player here will have this text that will direct them to an answer (ex. there is ... to read -> read ...);
-//  if insert the right words, something will be selected from the object and a change will be made
-  const welcomeMessage = `182 Main St.
-You are standing on Main Street between Church and South Winooski.
-There is a door here. A keypad sits on the handle.
-On the door is a handwritten sign that says: LOOK CLOSER\n`;
-
-  let answer = await ask(welcomeMessage);  //The player's answer will be stored in the variable answer
-
-
-// We check the answer 
-
-//If the player inserts these words tryng to force the door open
- if ((answer.includes('open')) && (answer.includes('door'))) {
-    console.log(doorAtBeginning.closed);
+const commandLookup = {
+  inventory: [ 'i', 'inventory'],
+  use: ['use'],
+  pickup: ['pick up'],
+  help: ['help'],
+  drop: ['drop'],
+  move: ['move'],
+  read: ['read'],
+  open: ['open'],
+  close: ['close']
 };
 
-// Otherwise, if the p inserts the right commands
-if (answer.includes('look closer')) {
-    console.log(`Mmm...weird`);
+
+
+ // ==============================================================       FUNCTIONS    ==============================================================================================
+function useItem(Item) {
+  console.log(`You use the ${Item}`);
 }
 
-else {
-    console.log(`...`);
-    answer = await ask ('Try again!\n');
-    
-    while (answer !== 'look closer') {
-    answer = await ask (`${answer} doesn't ring any bell. Try again!\n`);
-    }
-};
+function pickItem(Item) {
+  console.log(`You pick the ${Item}`);
+}
+
+// function openAndCloseDoors(door) {
+//   validOptions = door[DoorCurrState];
+
+//   if (validTransitions.includes(newDoorState)) {
+//     currentState = newState;
+//     console.log(`You moved to the ${currentState}`);
+//   }
+//   else {
+//     throw("Invalid state transition attempted - from " 
+//          + currentState + " to " + newState)
+//   }
+// }
+
+
+function transition(newRoom) {
+  const validTransitions = locationsYouCanGo[currentPlayerLocation];
+
+// first, check for invalid transition
+  if (!validTransitions.includes(newRoom)) {
+    console.log("We cant go this way, lets try somewhere else");
+  } else {
+    console.log(`You walk to the ${newRoom}`);
+    currentRoom = newRoom;
+  }
+}
+
+function getInventory(item) {
+  let stringInventory = item.inventory.toString(', ');
+  console.log(`In the ${item} there is: ${stringInventory} `);
+}
+
+
+// function openItem
+
+
+
+
+
+
+
+
+
+
+
+// *****************************************************
+let currentPlayerLocation = 'street';
+// *****************************************************
+
+start();
+async function start() {
+
+  console.log(`182 Main St.
+You are standing on Main Street between Church and South Winooski.
+There is a door here. A keypad sits on the handle.
+On the door is a handwritten sign`);
+
   
-console.log(`
-You went closer but it looks like the sign has changed. Now the text says:\n
-'If 2 equals 3,
-3 equals 5,
-and 25 equals 11.
-What does 17 equal to?'.
-If the right answer you will provide, you will start a jurney. But without a guide. 
-You have only 3 guesses. Good luck!`);
 
+while(true) {
+  let answer = await ask(`What would you like to do?\n`);  //The player's answer will be stored in the variable answer
+  let inputArray = answer.split(' ');
+  let command = inputArray[0];
+  let thing = inputArray[1];
 
-// First create a variable to store the total of tries that the player does because we gave a max of 3
-let totalGuesses = 2;
+  if(commandLookup.move.includes(command)) {
+    transition(thing)
+  } else if (commandLookup.inventory.includes(command)) {
+    getInventory(thing)
 
+  } else if (commandLookup.use.includes(command)) {
+    useItem(thing);
 
-const guessPass = `
-What do you think is the number?\n`
-  answer = await ask(guessPass);
+  } else if (commandLookup.pickup.includes(command)) {
+    pickItem(thing);
 
-    if (answer == 9) {
-       console.log(doorAtBeginning.open);
+  } else if(commandLookup.help.includes(command)) {
+    console.log('put function here for help inventory')
+
+  } else if(commandLookup.drop.includes(command)) {
+    console.log('put function here for drop inventory')
+  }
+  else if(commandLookup.read.includes(command)) {
+    if (thing.includes('sign')) {
+        console.log(sign.read());
     } 
-    
- 
-    else {
-      while (totalGuesses <= 3) {
-        totalGuesses++
-        console.log(`${answer} is the wrong answer.`)
-        answer = await ask ("Try again\n")
-        };
-    
-    
-
-    console.log(`AAH wrog number!\nIt's sad to see you leaving so soon.\nGAME OVER!`)
-    process.exit(); 
+    else if (thing.includes('parchment')) {
+      console.log(parchment.read);
+    }
+   
   }
 
-  const steppingInside = `
-After all the mistery you can finally see what's behind the door.
-You take a deep breath, but when you are about to put your hand on the door knob,
-you notice that the sign on the door has changed. Again.
-This time it is says: "Check your bag for a little message".
-`
-  answer = await ask(steppingInside);
+}   
 
-  if ((answer.includes('check')) && (answer.includes('bag'))) {
-     console.log(`
-You move your hand around and touch your wallet, then your bottle of water, then something unrecognizable.
-You pull it out: it's a parchment!
-
-The content is the following:
-'You know where you're coming from, but not where you are going.
-The helves put some extra help in your bag
-without you knowing. 
-The objects are going to change, basing on your needs.
-You might find a potion, or some magic seeds.
-`);
-} 
-  else {
-      console.log(`I don't understand ${answer}`);
-      answer = await ask ('Try again\n');
-      
-      while ((answer.includes !== 'check') && (answer.includes !== 'bag')) {
-      answer = await ask (`I don't understand ${answer}. Try again!\n`);
-      }
-  }; 
-   
-const moveToOpenDoor = `
-If you were confused before, now you are feeling completely lost.
-But one thing is sure: you want to unveil the mystery.
- `
-
- answer = await ask(moveToOpenDoor);
-
- if (answer.includes('open door')) {
-  console.log()
- }
- else {
-  console.log(`I don't understand ${answer}`);
-  answer = await ask ('Try again\n');
-  
-   while (answer.includes !== 'open door') {
-   answer = await ask (`I don't understand ${answer}. Try again!\n`);
-   }
-}; 
-  process.exit();
+ 
+process.exit();
 
 };
 

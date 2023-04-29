@@ -70,6 +70,13 @@ else {
     answer = await ask (`${answer} doesn't ring any bell. Try again!\n`);
     }
 }; 
+
+To check what's in your backpack inventory
+backpack.message
+
+function read(item) {
+ async function read (item) { console.log(item.read)}
+}
 -------------------------------------------------------JAVASCRIPT TOOLS NEEDED---------
 State Machine ---> currentRoom, other Rooms
 class, objects
