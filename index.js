@@ -23,25 +23,26 @@ const sign = {
   You have only 3 guesses. Good luck!`)
 
   const question = 'What do you think is the number?\n';
-  let answer = await ask(question);
+  let answerRidd = await ask(question);
   // First create a variable to store the total of tries that the player does because we gave a max of 3
-  let totalGuesses = 2; //We set this to 2 so the counting will work and it will only allow 3 tries
+  let totalGuesses = 0;
 
-    while (totalGuesses <= 3) {
-      if (answer == 9) {
+  while (totalGuesses < 3 || answerRidd !== 9) {
+    if (answerRidd == 9) {
       console.log('I knew you were the one! The door is now open');
+      return true;
       break;
-      } else {
-      console.log(`${answer} is the wrong answer.`);
+    } else {
+      console.log(`${answerRidd} is the wrong answer.`);
       totalGuesses++;
-      answer = await ask("Try again\n");
+      if (totalGuesses >= 3) {
+        console.log(`AAH wrog number!\nIt's sad to see you leaving so soon.\nGAME OVER!`);
+        process.exit();
       }
+      answerRidd = await ask("Try again\n");
     }
-
-    if (totalGuesses > 3) {
-      console.log(`AAH wrog number!\nIt's sad to see you leaving so soon.\nGAME OVER!`);
-      process.exit();
-    }
+  }
+  
   }
 };
 
@@ -129,10 +130,10 @@ const locationsYouCanGo = {
 const commandLookup = {
   inventory: [ 'i', 'inventory'],
   use: ['use'],
-  pickup: ['pick up'],
+  pickup: ['pick up', 'take', 'get', 'grab'],
   help: ['help'],
-  drop: ['drop'],
-  move: ['move'],
+  drop: ['drop', 'put down', 'throw away'],
+  move: ['move', 'go to'],
   read: ['read'],
   open: ['open'],
   close: ['close']
@@ -146,9 +147,13 @@ function useItem(Item) {
 }
 
 function pickItem(Item) {
-  console.log(`You pick the ${Item}`);
+  player.inventory.push(Item);
+  console.log(`Now ${Item} is part of your inventory`);
 }
 
+function dropItem(Item) {
+  
+}
 // function openAndCloseDoors(door) {
 //   validOptions = door[DoorCurrState];
 
@@ -223,6 +228,9 @@ while(true) {
 
   } else if (commandLookup.pickup.includes(command)) {
     pickItem(thing);
+  
+  } else if (commandLookup.drop.includes(command)) {
+    // ...
 
   } else if(commandLookup.help.includes(command)) {
     console.log('put function here for help inventory')
@@ -238,6 +246,8 @@ while(true) {
       console.log(parchment.read);
     }
    
+  } else {
+    console.log(`Sorry. I don't understand + ${answer}`)
   }
 
 }   
