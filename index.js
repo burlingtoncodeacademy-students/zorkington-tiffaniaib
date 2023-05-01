@@ -64,8 +64,10 @@ const commandLookup = {
 };
 
 const roomLookup = {
-  street: 'street',
-  hallway: 'hallway'
+  street: street,
+  hallway: hallway,
+  kitchen: kitchen,
+  bedroom: bedroom
 }
 
  // ==============================================================       FUNCTIONS    ==============================================================================================
