@@ -58,17 +58,17 @@ let sign = new Item (
 
 // ==================================================================        ROOMS         ======================================================================================
 let street = new Room (
-  'The keys are under the doormat. Mom',
+  '',
   locationsYouCanGo.street,
   ['sign'],
-  false
+  true
 );
 
 let hallway = new Room (
   `The hallway is just like you remembered: with white tinted walls and family pictures everywhere.`,
   locationsYouCanGo.hallway,
   ['library card'],
-  true
+  false //it's false because the door to access it is closed 
 )
 
 let kitchen = new Room (
@@ -122,19 +122,15 @@ function transition(newRoom) {
   const validTransitions = locationsYouCanGo[currentPlayerLocation];
 
   // first, we check if the transition is valid
-    if (!validTransitions.includes(newRoom)) {
-    console.log("We can't go this way, let's try somewhere else");
-  } else {
-    // if valid transition
-    if (newRoom.doorIsOpen) { 
-      // door is open, update current room and notify user
-      console.log(`You walk to the ${newRoom.name}`);
-      currentPlayerLocation = newRoom;
+    if (validTransitions.includes(newRoom)) {
+       // door is open, update current room and notify user
+       console.log(`You walk to the ${newRoom}`);
+       currentPlayerLocation = newRoom;
     } else {
-      console.log(`You can't go this way! The door is locked.`); //but the door is closed..
-    }
-  }
+      console.log(`You can't go this way! The door is locked.`); 
+      }
 }
+
 
 function getInventory(item) {
   let stringInventory = item.inventory.toString(', '); //we turn the inventory (arr) into a string using the method toString()
@@ -144,8 +140,8 @@ function getInventory(item) {
 
 function openItem(item) {
     if (!item.isOpen) {  //if we see that it is closed
-      item.isOpen = true;
       console.log(`Perfect! Now the door opens.`);
+      return item.isOpen = true;
     }   
   }
 
@@ -205,7 +201,11 @@ while(true) {
     if (thing.includes('sign')) {
         console.log(sign.description);
     }  
-  } 
+  }
+
+  else if(command.includes('7')) {
+    openItem(hallway)
+  }
 
   else if(commandLookup.open.includes(command)) {
     openItem(thing);
