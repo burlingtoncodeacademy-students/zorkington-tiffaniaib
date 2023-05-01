@@ -23,13 +23,6 @@ On the door is a handwritten sign.`;
 
 $$$$$$$$$ CODE THAT I WILL NEED DURING THE GAME $$$$$$$$$$
 
-let currentPlayerLocation = 'street';
-
-
-let answer = wait ask
-let differentAnswer = await ask
-
-
 let validInputs = [];
 
 
@@ -85,19 +78,11 @@ methods
 
 -----------------------------------------------------------------------------------------
 
-class Room {
-    constructor(description (immutable), connection (imm), inventory (mutable)) {
-        this.description = description
-        this.connection = connection
-        this.inventory = inventory
-    }
-}
-
-class Characters {
-  constructor (inventory, status) {
-    this.inventory = inventory
-    this.status = status
-  }
-}
 
 
+let defaultText = "\033[39m";
+let greenText = "\033[32m";
+let yellowText = "\033[0;33m";
+let redText = "\033[91m";
+let blueText = "\033[94m";
+let grayText = "\033[90m";

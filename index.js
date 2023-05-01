@@ -141,11 +141,11 @@ const commandLookup = {
 };
 
 const roomLookup = {
-  street: street,
-  field: field,
-  house: house,
-  tree: tree,
-  //castle: castle
+  street: 'street',
+  field: 'field',
+  house: 'house',
+  tree: 'tree',
+  castle: 'castle'
 }
 
  // ==============================================================       FUNCTIONS    ==============================================================================================
@@ -168,7 +168,7 @@ function dropItem(Item) {
 function transition(newRoom) {
   const validTransitions = locationsYouCanGo[currentPlayerLocation];
 
-  //first, we check if the transition is valid
+  // first, we check if the transition is valid
     if (!validTransitions.includes(newRoom)) {
     console.log("We can't go this way, let's try somewhere else");
   } else {
@@ -183,8 +183,6 @@ function transition(newRoom) {
   }
 }
 
-
-
 function getInventory(item) {
   let stringInventory = item.inventory.toString(', '); //we turn the inventory (arr) into a string using the method toString()
   console.log(`In the ${item} there is: ${stringInventory} `);
@@ -192,14 +190,10 @@ function getInventory(item) {
 
 
 function openItem(item) {
-
-    if (item.doorIsOpen) {  //if we see that it is open
-      item['doorIsOpen'] == false; //in order to show that it's closed we change the property to false
-      console.log(`You close the ${item.name}.`);
-    } else {
-      item['doorIsOpen'] == true;
-    console.log(`Perfect! Now the door opens.`);
-    }
+    if (!item.isOpen) {  //if we see that it is closed
+      item.isOpen = true;
+      console.log(`Perfect! Now the door opens.`);
+    }   
   }
   
 
@@ -258,9 +252,6 @@ while(true) {
   else if(commandLookup.read.includes(command)) {
     if (thing.includes('sign')) {
         console.log(sign.description);
-        currentPlayerLocation = 'field';
-        console.log(currentPlayerLocation);
-        console.log(start.doorIsOpen);
     } 
     else if (thing.includes('parchment')) {
       console.log(parchment.description);
@@ -268,15 +259,14 @@ while(true) {
    
   } else if(commandLookup.open.includes(command)) {
     openItem(thing);
-    
+  
 // TO OPEN DOOR AT THE BEGINNING
-  }  else if(command.includes(doorPass)) { //if the command is the password
-    (street.doorIsOpen); // use the function that opens doors to open the one at the beginning
+  } 
+  else if(command.includes('7')) {//if the command is the password
+    openItem(street.doorIsOpen); // use the function that opens doors to open the one at the beginning
+    transition(field);
+    console.log(curr)
     console.log(field.description);
-    currentPlayerLocation = 'field';
-    
-    
-
   } else {
     console.log(`Are you sure about your answer? ${command} doesn't seem right.
 Try again`)
