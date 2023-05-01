@@ -1,3 +1,4 @@
+
 const { Sign } = require('crypto');
 const readline = require('readline');
 const readlineInterface = readline.createInterface(process.stdin, process.stdout);
@@ -48,7 +49,7 @@ class Item {
 // ==================================================================        ITEMS          ======================================================================================
 let sign = new Item (
   'sign',
-  `The sign is a message from your parents: 'You know dad and I like trivia games, right? Our new passcode is the number of continents.\n\nAfter you manage to open the door, move to the hallway.`,
+  `The sign is a message from your parents: 'You know dad and I like trivia games, right?\nOur passcode is the number of continents.`,
   '',
   '',
   '',
@@ -90,7 +91,6 @@ const commandLookup = {
   inventory: [ 'i', 'inventory'],
   use: ['use'],
   pickup: ['take', 'get'],
-  help: ['help'],
   drop: ['drop'],
   move: ['move'],
   read: ['read'],
@@ -105,7 +105,11 @@ const roomLookup = {
 }
 
  // ==============================================================       FUNCTIONS    ==============================================================================================
-function useItem(Item) {
+function printDesc (item) {
+ console.log(item.description);
+ }
+
+ function useItem(Item) {
   console.log(`You use the ${Item}`);
 }
 
@@ -122,14 +126,13 @@ function transition(newRoom) {
   const validTransitions = locationsYouCanGo[currentPlayerLocation];
 
   // first, we check if the transition is valid
-  if (validTransitions.includes(newRoom)) {
-    // door is open, update current room and notify user
-    console.log(`You walk to the ${newRoom}`);
-    currentPlayerLocation = newRoom;
-  }   
-  else {
-      console.log(`You can't go this way!`); 
-  }
+    if (validTransitions.includes(newRoom)) {
+       // door is open, update current room and notify user
+       console.log(`You walk to the ${newRoom}`);
+       currentPlayerLocation = newRoom;
+    } else {
+      console.log(`You can't go this way! The door is locked.`); 
+      }
 }
 
 
@@ -162,7 +165,6 @@ You are standing on Main Street between Church and South Winooski.
 There is a door here. A keypad sits on the handle.
 On the door is a handwritten sign`);
 
-  
 
 while(true) {
   let answer = await ask(`What would you like to do now?\n`);  //The player's answer will be stored in the variable answer
@@ -190,10 +192,6 @@ while(true) {
   else if (commandLookup.drop.includes(command)) {
     dropItem();
   } 
-  
-  else if(commandLookup.help.includes(command)) {
-    console.log('put function here for help inventory')
-  } 
 
   else if(commandLookup.read.includes(command)) {
     if (thing.includes('sign')) {
@@ -202,7 +200,7 @@ while(true) {
   }
 
   else if(command.includes('7')) {
-    openItem(hallway)
+    openItem(hallway);
   }
 
   else if(commandLookup.open.includes(command)) {
@@ -214,7 +212,7 @@ Try again`)
 
 }   
 
- 
+start();
 process.exit();
 
 };
