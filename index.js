@@ -48,7 +48,7 @@ class Item {
 // ==================================================================        ITEMS          ======================================================================================
 let sign = new Item (
   'sign',
-  `The sign is a message from your parents: 'You know dad and I like trivia games, right?\nOur passcode is the number of continents.`,
+  `The sign is a message from your parents: 'You know dad and I like trivia games, right? Our new passcode is the number of continents.\n\nAfter you manage to open the door, move to the hallway.`,
   '',
   '',
   '',
@@ -122,13 +122,14 @@ function transition(newRoom) {
   const validTransitions = locationsYouCanGo[currentPlayerLocation];
 
   // first, we check if the transition is valid
-    if (validTransitions.includes(newRoom)) {
-       // door is open, update current room and notify user
-       console.log(`You walk to the ${newRoom}`);
-       currentPlayerLocation = newRoom;
-    } else {
-      console.log(`You can't go this way! The door is locked.`); 
-      }
+  if (validTransitions.includes(newRoom)) {
+    // door is open, update current room and notify user
+    console.log(`You walk to the ${newRoom}`);
+    currentPlayerLocation = newRoom;
+  }   
+  else {
+      console.log(`You can't go this way!`); 
+  }
 }
 
 
@@ -165,10 +166,11 @@ On the door is a handwritten sign`);
 
 while(true) {
   let answer = await ask(`What would you like to do now?\n`);  //The player's answer will be stored in the variable answer
-  let inputArray = answer.split(' ');
-  let command = inputArray[0];
-  let thing = inputArray[1];
+  let inputArray = answer.split(' '); //we separate the string in two parts
+  let command = inputArray[0]; //the first part is stored in a variable that represent the command that the player gives 
+  let thing = inputArray[1]; //the second, in the variabl 'thing' that completes the command
 
+// both command and thing are used to run the following code accordingly to the player's choice
   if(commandLookup.move.includes(command)) {
     transition(thing)
   } 
@@ -186,16 +188,12 @@ while(true) {
   } 
   
   else if (commandLookup.drop.includes(command)) {
-    // ...
+    dropItem();
   } 
   
   else if(commandLookup.help.includes(command)) {
     console.log('put function here for help inventory')
   } 
-
-  else if(commandLookup.drop.includes(command)) {
-    console.log('put function here for drop inventory')
-  }
 
   else if(commandLookup.read.includes(command)) {
     if (thing.includes('sign')) {
